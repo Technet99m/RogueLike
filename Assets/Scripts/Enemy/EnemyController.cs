@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     Vector2 rightTop = new Vector2(5.81f, 4.35f);
     Vector2 targetPos;
 
-    bool onPos, inCorner;
+    bool onPos, inCorner, isActive;
     void Start()
     {
         player = PlayerController.player;
@@ -30,51 +30,55 @@ public class EnemyController : MonoBehaviour
         } while (!isOk);
         onPos = false;
         InvokeRepeating(nameof(LookAtPlayer), 1f, 1f);
+        Invoke(nameof(MakeActive), 1f);
     }
-
+    void MakeActive()
+    {
+        isActive = true;
+    }
     private void Update()
     {
-        if (!onPos)
+        if (isActive)
         {
-            Vector2 dir = (targetPos - (Vector2)transform.position).normalized;
-            rb.velocity =  dir * Time.deltaTime * speed;
-            anim.SetFloat("velocityX", dir.x);
-            anim.SetFloat("velocity", dir.magnitude);
-            if (Vector2.Distance(transform.position, targetPos) < 0.1f)
+            if (!onPos)
             {
-                anim.SetFloat("velocityX", 0);
+                Vector2 dir = (targetPos - (Vector2)transform.position).normalized;
+                rb.velocity = dir * Time.deltaTime * speed;
+                anim.SetFloat("velocityX", dir.x);
+                anim.SetFloat("velocity", dir.magnitude);
+                if (Vector2.Distance(transform.position, targetPos) < 0.1f)
+                {
+                    anim.SetFloat("velocityX", 0);
+                    anim.SetFloat("velocity", 0);
+                    onPos = true;
+                    LookAtPlayer();
+                }
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
                 anim.SetFloat("velocity", 0);
-                onPos = true;
-                LookAtPlayer();
             }
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-        }
-        if (distanceToPlayer > Vector2.Distance(transform.position, player.position) && !inCorner)
-        {
-            targetPos = transform.position - (player.position - transform.position).normalized;
-            if(!Bounds.CheckBounds(targetPos, leftBottom, rightTop))
+            if (distanceToPlayer > Vector2.Distance(transform.position, player.position) && !inCorner)
             {
-                targetPos = new Vector2(Mathf.Clamp(targetPos.x, leftBottom.x, rightTop.x), Mathf.Clamp(targetPos.y, leftBottom.y, rightTop.y));
+                targetPos = transform.position - (player.position - transform.position).normalized;
+                onPos = false;
             }
-            onPos = false;
+            else if (Vector2.Distance(transform.position, player.position) > (distanceToPlayer * 2f))
+            {
+                targetPos = transform.position + (player.position - transform.position).normalized * 1.5f;
+                onPos = false;
+                inCorner = false;
+            }
+            gun.canShoot = onPos;
         }
-        else if(Vector2.Distance(transform.position, player.position) > distanceToPlayer*2f)
-        {
-            targetPos = transform.position + (player.position - transform.position).normalized * 3f;
-            onPos = false;
-            inCorner = false;
-        }
-        gun.canShoot = onPos;
 
     }
     private void LateUpdate()
     {
         weapon.flipX = sr.flipX;
-        if (Vector2.Distance(transform.position, leftBottom) < 0.1f || Vector2.Distance(transform.position, rightTop) < 0.1f || Vector2.Distance(transform.position, new Vector2(leftBottom.x, rightTop.y)) < 0.1f || Vector2.Distance(transform.position, new Vector2(rightTop.x, leftBottom.y)) < 0.1f)
-            inCorner = true;
+        /*if (Vector2.Distance(transform.position, leftBottom) < 0.1f || Vector2.Distance(transform.position, rightTop) < 0.1f || Vector2.Distance(transform.position, new Vector2(leftBottom.x, rightTop.y)) < 0.1f || Vector2.Distance(transform.position, new Vector2(rightTop.x, leftBottom.y)) < 0.1f)
+            inCorner = true;*/
     }
     void LookAtPlayer()
     {
@@ -85,6 +89,15 @@ public class EnemyController : MonoBehaviour
         else if (player.position.x < transform.position.x)
         {
             anim.Play("IdleLeft");
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.CompareTag("Bounds"))
+        {
+            inCorner = true;
+            onPos = true;
         }
     }
 }

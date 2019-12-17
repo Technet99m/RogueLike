@@ -8,7 +8,7 @@ public class EnemyGunController : MonoBehaviour
     Transform target;
     [SerializeField] float reloadTime;
     [SerializeField] GameObject bullet;
-    public bool canShoot;
+    public bool canShoot,triple;
     private void Start()
     {
         target = PlayerController.player;
@@ -23,8 +23,14 @@ public class EnemyGunController : MonoBehaviour
     }
     void Shoot()
     {
-        Instantiate(bullet, transform.position, Quaternion.Euler(0,0,transform.rotation.eulerAngles.z +180 * (sr.flipX ? 0 : 1f)));
-        print((target.position - transform.position).normalized);
+        if (triple)
+        {
+            Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 15 + 180 * (sr.flipX ? 1 : 0f))), 3f);
+            Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180 * (sr.flipX ? 1 : 0f))), 3f);
+            Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z - 15 + 180 * (sr.flipX ? 1 : 0f))), 3f);
+        }
+        else
+            Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180 * (sr.flipX ? 1 : 0f))), 3f);
     }
     IEnumerator Reload()
     {

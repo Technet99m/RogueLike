@@ -18,24 +18,25 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         joy.DeadZone = 0.1f;
+        weapon = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     void Update()
     {
         Vector2 dir = new Vector2();
         dir = new Vector2(joy.Horizontal, joy.Vertical);
-        if(Input.GetKey(KeyCode.D))
+        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             dir += Vector2.right;
         }
-        else if(Input.GetKey(KeyCode.A))
+        else if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             dir += Vector2.left;
         }
-        if(Input.GetKey(KeyCode.W))
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             dir += Vector2.up;
         }
-        else if(Input.GetKey(KeyCode.S))
+        else if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             dir += Vector2.down;
         }
