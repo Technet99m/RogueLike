@@ -9,6 +9,8 @@ public class GunController : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float reloadTime;
     [SerializeField] LayerMask mask;
+    [SerializeField] SpriteRenderer player;
+    [SerializeField] bool ultra;
     float nextTimeToShoot = 0;
     private void Start()
     {
@@ -32,10 +34,15 @@ public class GunController : MonoBehaviour
         
     }
 
+    private void LateUpdate()
+    {
+        sr.flipX = player.flipX;
+        sr.flipX ^= ultra;
+    }
     void FindTarget()
     {
         Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, 10,mask.value);
-        if (colls != null)
+        if (colls.Length>0)
         {
             int minIndex = 0;
             for (int i = 0; i < colls.Length; i++)

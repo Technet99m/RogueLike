@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float speed;
     [SerializeField] Joystick joy;
-    [SerializeField] SpriteRenderer weapon;
 
     public static Transform player;
     private void Awake()
@@ -18,7 +17,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         joy.DeadZone = 0.1f;
-        weapon = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     void Update()
     {
@@ -40,9 +38,7 @@ public class PlayerController : MonoBehaviour
         {
             dir += Vector2.down;
         }
-        rb.velocity = dir.normalized * speed * Time.deltaTime;
-        if ((dir.x > 0 && weapon.flipX) || (dir.x < 0 && !weapon.flipX))
-            weapon.flipX ^= true;
+        rb.velocity = dir.normalized * speed * Time.deltaTime; 
         anim.SetFloat("velocityX",dir.x);
         anim.SetFloat("velocity", dir.magnitude);
     }

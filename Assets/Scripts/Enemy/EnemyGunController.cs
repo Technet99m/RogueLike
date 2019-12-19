@@ -5,11 +5,11 @@ using UnityEngine;
 public class EnemyGunController : MonoBehaviour
 {
     [SerializeField] SpriteRenderer sr;
-    Transform target;
-    [SerializeField] float reloadTime;
-    [SerializeField] GameObject bullet;
+    protected Transform target;
+    [SerializeField] protected float reloadTime;
+    [SerializeField] protected GameObject bullet;
     public bool canShoot,triple;
-    private void Start()
+    protected void Start()
     {
         target = PlayerController.player;
         StartCoroutine(Reload());
@@ -21,7 +21,7 @@ public class EnemyGunController : MonoBehaviour
             transform.right = (target.position - transform.position) * (sr.flipX ? -1f : 1f);
         }
     }
-    void Shoot()
+    protected virtual void Shoot()
     {
         if (triple)
         {
@@ -32,7 +32,7 @@ public class EnemyGunController : MonoBehaviour
         else
             Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180 * (sr.flipX ? 1 : 0f))), 3f);
     }
-    IEnumerator Reload()
+    protected virtual IEnumerator Reload()
     {
         while(true)
         {
