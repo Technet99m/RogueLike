@@ -111,4 +111,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   targetTag: Enemy
-  damage: 0.16
+  damage: 0.32
+  anim: {fileID: 0}

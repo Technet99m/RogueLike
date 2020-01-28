@@ -16,19 +16,11 @@ public class BossController : MonoBehaviour
     Vector2 targetPos;
 
     bool onPos, inCorner, isActive;
-    void Start()
+    void OnEnable()
     {
         player = PlayerController.player;
-        bool isOk = false;
-        do
-        {
-            float angle = Random.Range(0, 2 * Mathf.PI);
-            float r = Random.Range(2, 5);
-            targetPos = new Vector2(Mathf.Sin(angle) * r, Mathf.Cos(angle) * r) + (Vector2)transform.position;
-            if (Bounds.CheckBounds(targetPos, leftBottom, rightTop))
-                isOk = true;
-        } while (!isOk);
-        onPos = false;
+        onPos = true;
+        isActive = false;
         InvokeRepeating(nameof(LookAtPlayer), 1f, 1f);
         Invoke(nameof(MakeActive), 1f);
     }
@@ -77,13 +69,16 @@ public class BossController : MonoBehaviour
 
     void LookAtPlayer()
     {
-        if (player.position.x > transform.position.x)
+        if (!anim.GetBool("isDead"))
         {
-            anim.Play("IdleRight");
-        }
-        else if (player.position.x < transform.position.x)
-        {
-            anim.Play("IdleLeft");
+            if (player.position.x > transform.position.x)
+            {
+                anim.Play("IdleRight");
+            }
+            else if (player.position.x < transform.position.x)
+            {
+                anim.Play("IdleLeft");
+            }
         }
     }
 

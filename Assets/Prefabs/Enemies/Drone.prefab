@@ -57,6 +57,8 @@ MonoBehaviour:
   distanceToPlayer: 4
   anim: {fileID: 6733911223254185829}
   gun: {fileID: 6733911222026053067}
+  leftBottom: {x: -6.68, y: -4.43}
+  rightTop: {x: 5.81, y: 4.35}
 --- !u!114 &1859477267989307162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +325,7 @@ PrefabInstance:
     - target: {fileID: 2150497709858008471, guid: 1f739400231bf6948bfcd7c8b447544b,
         type: 3}
       propertyPath: reloadTime
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f739400231bf6948bfcd7c8b447544b, type: 3}

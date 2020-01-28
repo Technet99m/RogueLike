@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    protected float Health;
+    public float Health;
     public float MaxHealth;
 
-    private void Start()
+    protected virtual void OnEnable()
     {
         Health = MaxHealth;
     }

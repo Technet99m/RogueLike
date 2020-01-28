@@ -10,14 +10,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] EnemyGunController gun;
     Transform player;
-    Vector2 leftBottom = new Vector2(-6.68f, -4.43f);
-    Vector2 rightTop = new Vector2(5.81f, 4.35f);
+    [SerializeField] Vector2 leftBottom = new Vector2(-6.68f, -4.43f);
+    [SerializeField] Vector2 rightTop = new Vector2(5.81f, 4.35f);
     Vector2 targetPos;
 
     bool onPos, inCorner, isActive;
-    void Start()
+    void OnEnable()
     {
         player = PlayerController.player;
+        anim.Play("Appear");
         transform.position = new Vector3(Random.Range(leftBottom.x, rightTop.x), Random.Range(leftBottom.y, rightTop.y));
         bool isOk = false;
         do
@@ -44,7 +45,8 @@ public class EnemyController : MonoBehaviour
             {
                 Vector2 dir = (targetPos - (Vector2)transform.position).normalized;
                 rb.velocity = dir * Time.deltaTime * speed;
-                anim.SetFloat("velocityX", dir.x);
+
+                anim.SetFloat("velocityX", player.position.x - transform.position.x);
                 anim.SetFloat("velocity", dir.magnitude);
                 if (Vector2.Distance(transform.position, targetPos) < 0.1f)
                 {

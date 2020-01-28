@@ -8,6 +8,7 @@ public class RocketController : MonoBehaviour
     float initVert;
     bool down;
     [SerializeField] Animator anim;
+    [SerializeField] AudioSource audio;
     [SerializeField] float speed,time;
     void OnEnable()
     {
@@ -35,6 +36,7 @@ public class RocketController : MonoBehaviour
                 coll.GetComponent<HealthManager>().TakeDamage(0.3f);
         transform.rotation = Quaternion.identity;
         enabled = false;
+        audio.Play();
         anim.Play("Boom");
         Destroy(gameObject, 1f);
     }

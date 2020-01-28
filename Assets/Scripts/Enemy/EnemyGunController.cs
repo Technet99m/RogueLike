@@ -5,11 +5,12 @@ using UnityEngine;
 public class EnemyGunController : MonoBehaviour
 {
     [SerializeField] SpriteRenderer sr;
+    [SerializeField] protected AudioSource audio;
     protected Transform target;
     [SerializeField] protected float reloadTime;
     [SerializeField] protected GameObject bullet;
     public bool canShoot,triple;
-    protected void Start()
+    protected void OnEnable()
     {
         target = PlayerController.player;
         StartCoroutine(Reload());
@@ -23,6 +24,7 @@ public class EnemyGunController : MonoBehaviour
     }
     protected virtual void Shoot()
     {
+        audio.Play();
         if (triple)
         {
             Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 15 + 180 * (sr.flipX ? 1 : 0f))), 3f);

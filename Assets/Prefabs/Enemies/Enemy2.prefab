@@ -184,6 +184,8 @@ MonoBehaviour:
   distanceToPlayer: 3
   anim: {fileID: 5431354320460849958}
   gun: {fileID: 5582418904079825811}
+  leftBottom: {x: -6.68, y: -4.43}
+  rightTop: {x: 5.81, y: 4.35}
 --- !u!95 &5431354320460849958
 Animator:
   serializedVersion: 3
@@ -215,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d599e4583cfc8242b79371698375f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 0
   MaxHealth: 3
 --- !u!50 &5431354320460849956
 Rigidbody2D:
@@ -260,6 +263,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5431354320460849961}
     m_Modifications:
+    - target: {fileID: 6684684145537756309, guid: 987fba1a04257484cbbae9874b669225,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 49e8c623adcd76e41b4f428d525414be, type: 3}
     - target: {fileID: 439302795931683462, guid: 987fba1a04257484cbbae9874b669225,
         type: 3}
       propertyPath: m_Name
@@ -320,17 +328,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 439302795931683460, guid: 987fba1a04257484cbbae9874b669225,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ba4b6706f4fc3304a9f1c0f68c992016,
-        type: 3}
-    - target: {fileID: 439302795931683460, guid: 987fba1a04257484cbbae9874b669225,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 439302795931683467, guid: 987fba1a04257484cbbae9874b669225,
         type: 3}
       propertyPath: triple
@@ -342,6 +339,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4893262597616351004, guid: 44492637f8ef0c349a12ab91f9039c81,
         type: 3}
+    - target: {fileID: 439302795931683467, guid: 987fba1a04257484cbbae9874b669225,
+        type: 3}
+      propertyPath: reloadTime
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 439302795931683460, guid: 987fba1a04257484cbbae9874b669225,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ba4b6706f4fc3304a9f1c0f68c992016,
+        type: 3}
+    - target: {fileID: 439302795931683460, guid: 987fba1a04257484cbbae9874b669225,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 987fba1a04257484cbbae9874b669225, type: 3}
 --- !u!4 &5582418904079825821 stripped

@@ -5,33 +5,33 @@ using UnityEngine;
 public class WeaponSelector : MonoBehaviour
 {
     [SerializeField] GameObject[] weapons;
-    [SerializeField] GameObject manager,light;
+    [SerializeField] GameObject manager,point;
+    [SerializeField] AudioSource audio;
     public static int current = -1;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.CompareTag("Vending"))
         {
+            point.SetActive(false);
             col.enabled = false;
-            manager.SetActive(true);
+            if(current<0)
+                manager.GetComponent<SceneManager>().Init();
             GetNewWeapon();
         }
     }
     void GetNewWeapon()
     {
+        audio.Play();
         if(current<0)
         {
-            current = Random.Range(0, weapons.Length);
+            current = 0;
             weapons[current].SetActive(true);
         }
         else
         {
             weapons[current].SetActive(false);
-            current = current + (Random.value > 0.5f ? 1 : -1);
-            if (current < 0)
-                current = weapons.Length - 1;
-            else if (current == weapons.Length)
-                current = 0;
+            current = 1;
             weapons[current].SetActive(true);
         }
     }

@@ -6,19 +6,31 @@ public class SceneManager : MonoBehaviour
 {
     public static SceneManager instance;
     [SerializeField] GameObject[] enemies;
+    [SerializeField] GameObject wall,pointer;
     [SerializeField] int packSize;
     int left, index;
 
-    private void Awake()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+            if (gameObject.name == "ThirdScene")
+            {
+                UIManager.instance.gameObject.SetActive(true);
+                return;
+            }
+            Init();
+            
+        }
+    }
+    public void Init()
     {
         instance = this;
-    }
-
-    void Start()
-    {
+        index = 0;
+        print(instance.gameObject.name);
         SpawnNewPack();
     }
-
     void SpawnNewPack()
     {
         left = packSize;
@@ -34,12 +46,14 @@ public class SceneManager : MonoBehaviour
     public void DieAgain()
     {
         left--;
-        if (left == 0)
+        print("Left: " + left);
+        if (left <= 0)
             Invoke(nameof(SpawnNewPack),1f);
     }
     void NewScene()
     {
-
+        pointer.SetActive(true);
+        wall.SetActive(false);
     }
 
 }

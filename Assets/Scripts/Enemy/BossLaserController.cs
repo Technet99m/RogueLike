@@ -20,12 +20,9 @@ public class BossLaserController : EnemyGunController
             yield return new WaitForEndOfFrame();
         }
     }
-    private void Update()
-    {
-        
-    }
     protected override void Shoot()
     {
+        audio.Play();
         transform.right = (target.position - transform.position) * ((transform.position.x > target.position.x) ? -1f : 1f);
         Destroy(Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180 * ((transform.position.x > target.position.x) ? 1 : 0f))), 3f);
     }

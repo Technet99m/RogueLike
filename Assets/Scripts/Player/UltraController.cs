@@ -8,20 +8,29 @@ public class UltraController : MonoBehaviour
     public static UltraController instance;
     [SerializeField] Slider progress;
     [SerializeField] Image bar;
-
+    [SerializeField] GameObject light,ultralight;
+    public bool ulta;
     float value;
 
     private void Awake()
     {
         instance = this;
     }
-    void Start()
+    void OnEnable()
     {
-        value = 0;
+        value = 0f;
+        progress.value = 0;
     }
     private void Update()
     {
-        if(Input.GetMouseButtonDown(1))
+        if (!Application.isMobilePlatform && Input.GetMouseButtonDown(1))
+        {
+            UltraCheck();
+        }
+    }
+    public void UltraCheck()
+    {
+        if(value > 0.98f)
         {
             UltraBegin();
         }
@@ -32,22 +41,33 @@ public class UltraController : MonoBehaviour
         progress.value = value;
         if(value < 0.95f)
         {
+            ultralight.SetActive(false);
+        }
+        else
+        {
+            ultralight.SetActive(true);
+        }
+    }
+    void UltraBegin()
+    {
+        value = 0;
+        ultralight.SetActive(false);
+        progress.value = value;
+        if (value < 0.98f)
+        {
             bar.color = new Color(1, 0, 1);
         }
         else
         {
             bar.color = new Color(1, 1, 0);
         }
-    }
-    void UltraBegin()
-    {
-        weapons[current + weapons.Length / 2].SetActive(true);
+        ulta = true;
         light.SetActive(true);
         Invoke(nameof(UltraEnd), 5f);
     }
     void UltraEnd()
     {
-        weapons[current + weapons.Length / 2].SetActive(false);
+        ulta = false;
         light.SetActive(false);
     }
 }
